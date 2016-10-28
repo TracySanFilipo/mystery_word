@@ -40,19 +40,8 @@ def get_random_word(word_list):
     secret_word = random.choice(word_list)
     return secret_word
 
-def check_length(mysteryword):
-    length = len(mysteryword)
-    return length
-
 def reveal_length_of_word(wordlength):
     print("The mystery word is {} characters long.".format(wordlength))
-
-def display_inital_blanks(length):
-    display_list = []
-    dash_number = "_" * length
-    display_list = dash_number.split()
-    print("_ "*length)
-    return display_list
 
 def display_blanks_and_guessed_letters(length, secret_word, good_guesses):
     flashy_display_list = []
@@ -62,7 +51,7 @@ def display_blanks_and_guessed_letters(length, secret_word, good_guesses):
         else:
             flashy_display_list.append("_")
     flashy = " ".join(flashy_display_list)
-    print(flashy)
+    print("\n" + flashy + "\n")
 
 def obtain_user_guess(bad_guesses, good_guesses):
     while True:
@@ -77,15 +66,6 @@ def obtain_user_guess(bad_guesses, good_guesses):
             print("That is not an appropriate guess.")
             continue
 
-def remaining_letters(bad_guesses, good_guesses):
-    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    remaining_alpha = []
-    for letters in alphabet:
-        if letters not in bad_guesses and letters not in good_guesses:
-            remaining_alpha.append(letters)
-    flash_remaining_alpha = ", ".join(remaining_alpha)
-    print("The letters you have not guessed are: {}".format(flash_remaining_alpha))
-
 def check_for_complete_word(secret_word, good_guesses):
     final_word = []
     for letters in secret_word:
@@ -98,12 +78,12 @@ def game():
     difficulty_level = try_to_get_difficulty_from_user()
     possibilities = obtain_words_of_appropriate_difficulty(difficulty_level)
     the_mystery_word = get_random_word(possibilities)
-    obtain_length_of_word = check_length(the_mystery_word)
+    obtain_length_of_word = len(the_mystery_word)
     reveal_length_of_word(obtain_length_of_word)
-    display_list_to_swap = display_inital_blanks(obtain_length_of_word)
     bad_guesses_number = 0
     bad_guesses = []
     good_guesses = []
+    display_blanks_and_guessed_letters(obtain_length_of_word, the_mystery_word, good_guesses)
     while bad_guesses_number < 8:
         guess = obtain_user_guess(bad_guesses, good_guesses)
         if len(guess) == 1:
@@ -111,7 +91,6 @@ def game():
                 good_guesses.append(guess)
                 print("Good job! The letter {} is in the mystery word! You still have {} guesses left".format(guess, (8 - bad_guesses_number)))
                 display_blanks_and_guessed_letters(obtain_length_of_word, the_mystery_word, good_guesses)
-                remaining_letters(bad_guesses, good_guesses)
                 result = check_for_complete_word(the_mystery_word, good_guesses)
                 if result != False:
                     print("You win! The mystery word was {}".format(the_mystery_word))
@@ -121,7 +100,6 @@ def game():
                 bad_guesses.append(guess)
                 print("Sorry, {} is not in the word. You only have {} guesses remaining.".format(guess, (8 - bad_guesses_number)))
                 display_blanks_and_guessed_letters(obtain_length_of_word, the_mystery_word, good_guesses)
-                remaining_letters(bad_guesses, good_guesses)
         else:
             continue
     if bad_guesses_number >= 8:
@@ -139,4 +117,5 @@ def main():
             print("Y for yes or n for no.")
             continue
 
-main()
+if __name__ == "__main__":
+    main()
