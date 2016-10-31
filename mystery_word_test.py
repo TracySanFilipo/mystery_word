@@ -1,17 +1,17 @@
-from mystery_word import obtain_words_of_appropriate_difficulty
+from mystery_word import obtain_wordlist
 
 def test_easy_words():
-    word_list = obtain_words_of_appropriate_difficulty("1")
+    word_list = obtain_wordlist("1")
     for word in word_list:
         assert 4 <= len(word) <=6
 
 def test_normal_words():
-    word_list = obtain_words_of_appropriate_difficulty("2")
+    word_list = obtain_wordlist("2")
     for word in word_list:
         assert 6 <= len(word) <=8
 
 def test_hard_words():
-    word_list = obtain_words_of_appropriate_difficulty("3")
+    word_list = obtain_wordlist("3")
     for word in word_list:
         assert len(word) >8
 
